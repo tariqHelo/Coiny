@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Banks extends Model
+class GeneralIncome extends Model
 {
     use HasFactory;
 
-      protected $fillable = [
-        'name',
-        'address',
-        'total_balance',
+    protected $fillable = [
+        'icon',
+        'amount',
+        'category_id',
+         'note',
+        'type',
         'user_id'
     ];
-     
-     
     public function user()
     {
         return $this->belongsTo(User::class);

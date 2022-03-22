@@ -9,7 +9,7 @@ class ChartOfAccounts extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'parent_id'];
+    protected $fillable = ['name', 'parent_id','user_id'];
 
     public function childs()
     {
@@ -19,5 +19,10 @@ class ChartOfAccounts extends Model
     public function parent()
     {
         return $this->belongsTo(ChartOfAccounts::class, 'parent_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

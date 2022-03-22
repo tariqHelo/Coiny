@@ -17,8 +17,9 @@ class CreateRulesTable extends Migration
             $table->id();
             $table->string('name');
             $table->float('amount');
-            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->string('period');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

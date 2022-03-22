@@ -9,5 +9,18 @@ class Assets extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];  
+     protected $fillable = [
+        'icon',
+        'name',
+        'useful_life',
+         'depreciation',
+        'value',
+        'user_id',
+    ];
+    
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

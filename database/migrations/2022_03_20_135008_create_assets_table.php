@@ -20,6 +20,8 @@ class CreateAssetsTable extends Migration
             $table->integer('useful_life');
             $table->integer('depreciation');
             $table->float('value');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            
             $table->timestamps();
         });
     }

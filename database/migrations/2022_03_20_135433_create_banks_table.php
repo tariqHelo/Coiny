@@ -18,6 +18,7 @@ class CreateBanksTable extends Migration
             $table->string('name');
             $table->string('address');
             $table->float('total_balance');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -19,6 +19,8 @@ class CreateBankAccountsTable extends Migration
             $table->float('amount');
             $table->foreignId('bank_id')->constrained('banks')->cascadeOnDelete();
             $table->enum('type',['Current' , 'Savings']);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
             $table->timestamps();
         });
     }

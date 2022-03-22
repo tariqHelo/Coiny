@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateChartOfAccountsTable extends Migration
+class CreateGeneralIncomesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateChartOfAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('chart_of_accounts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->enum('type',['Assets' , 'Equity' , 'Revenues' , 'Expenses']);
-            $table->integer('parent_id')->unsigned()->nullable();
+        Schema::create('general_incomes', function (Blueprint $table) {
+            $table->id();
+            $table->string('icon');
+            $table->float('amount');
+            $table->longText('note');
+            $table->enum('type',['expenses' , 'revenues']);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateChartOfAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chart_of_accounts');
+        Schema::dropIfExists('general_incomes');
     }
 }
