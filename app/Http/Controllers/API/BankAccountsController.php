@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Models\Revenues;
-use App\Http\Requests\StoreRevenuesRequest;
-use App\Http\Requests\UpdateRevenuesRequest;
+use App\Models\BankAccounts;
+use App\Http\Requests\StoreBankAccountsRequest;
+use App\Http\Requests\UpdateBankAccountsRequest;
 
-class RevenuesController extends Controller
+class BankAccountsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class RevenuesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreRevenuesRequest  $request
+     * @param  \App\Http\Requests\StoreBankAccountsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRevenuesRequest $request)
+    public function store(StoreBankAccountsRequest $request)
     {
         //
     }
@@ -42,10 +42,10 @@ class RevenuesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Revenues  $revenues
+     * @param  \App\Models\BankAccounts  $bankAccounts
      * @return \Illuminate\Http\Response
      */
-    public function show(Revenues $revenues)
+    public function show(BankAccounts $bankAccounts)
     {
         //
     }
@@ -53,10 +53,10 @@ class RevenuesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Revenues  $revenues
+     * @param  \App\Models\BankAccounts  $bankAccounts
      * @return \Illuminate\Http\Response
      */
-    public function edit(Revenues $revenues)
+    public function edit(BankAccounts $bankAccounts)
     {
         //
     }
@@ -64,11 +64,11 @@ class RevenuesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateRevenuesRequest  $request
-     * @param  \App\Models\Revenues  $revenues
+     * @param  \App\Http\Requests\UpdateBankAccountsRequest  $request
+     * @param  \App\Models\BankAccounts  $bankAccounts
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRevenuesRequest $request, Revenues $revenues)
+    public function update(UpdateBankAccountsRequest $request, BankAccounts $bankAccounts)
     {
         //
     }
@@ -76,10 +76,10 @@ class RevenuesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Revenues  $revenues
+     * @param  \App\Models\BankAccounts  $bankAccounts
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Revenues $revenues)
+    public function destroy(BankAccounts $bankAccounts)
     {
         //
     }

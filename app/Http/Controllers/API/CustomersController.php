@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Models\Banks;
-use App\Http\Requests\StoreBanksRequest;
-use App\Http\Requests\UpdateBanksRequest;
+use App\Models\Customers;
+use App\Http\Requests\StoreCustomersRequest;
+use App\Http\Requests\UpdateCustomersRequest;
 
-class BanksController extends Controller
+class CustomersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class BanksController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreBanksRequest  $request
+     * @param  \App\Http\Requests\StoreCustomersRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBanksRequest $request)
+    public function store(StoreCustomersRequest $request)
     {
         //
     }
@@ -42,10 +42,10 @@ class BanksController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Banks  $banks
+     * @param  \App\Models\Customers  $customers
      * @return \Illuminate\Http\Response
      */
-    public function show(Banks $banks)
+    public function show(Customers $customers)
     {
         //
     }
@@ -53,10 +53,10 @@ class BanksController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Banks  $banks
+     * @param  \App\Models\Customers  $customers
      * @return \Illuminate\Http\Response
      */
-    public function edit(Banks $banks)
+    public function edit(Customers $customers)
     {
         //
     }
@@ -64,11 +64,11 @@ class BanksController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateBanksRequest  $request
-     * @param  \App\Models\Banks  $banks
+     * @param  \App\Http\Requests\UpdateCustomersRequest  $request
+     * @param  \App\Models\Customers  $customers
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBanksRequest $request, Banks $banks)
+    public function update(UpdateCustomersRequest $request, Customers $customers)
     {
         //
     }
@@ -76,10 +76,10 @@ class BanksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Banks  $banks
+     * @param  \App\Models\Customers  $customers
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Banks $banks)
+    public function destroy(Customers $customers)
     {
         //
     }

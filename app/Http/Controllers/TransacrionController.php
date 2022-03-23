@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Expenses;
-use App\Http\Requests\StoreExpensesRequest;
-use App\Http\Requests\UpdateExpensesRequest;
+use App\Models\Transacrion;
+use App\Http\Requests\StoreTransacrionRequest;
+use App\Http\Requests\UpdateTransacrionRequest;
 
-class ExpensesController extends Controller
+class TransacrionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class ExpensesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreExpensesRequest  $request
+     * @param  \App\Http\Requests\StoreTransacrionRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreExpensesRequest $request)
+    public function store(StoreTransacrionRequest $request)
     {
         //
     }
@@ -42,10 +42,10 @@ class ExpensesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Expenses  $expenses
+     * @param  \App\Models\Transacrion  $transacrion
      * @return \Illuminate\Http\Response
      */
-    public function show(Expenses $expenses)
+    public function show(Transacrion $transacrion)
     {
         //
     }
@@ -53,10 +53,10 @@ class ExpensesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Expenses  $expenses
+     * @param  \App\Models\Transacrion  $transacrion
      * @return \Illuminate\Http\Response
      */
-    public function edit(Expenses $expenses)
+    public function edit(Transacrion $transacrion)
     {
         //
     }
@@ -64,11 +64,11 @@ class ExpensesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateExpensesRequest  $request
-     * @param  \App\Models\Expenses  $expenses
+     * @param  \App\Http\Requests\UpdateTransacrionRequest  $request
+     * @param  \App\Models\Transacrion  $transacrion
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateExpensesRequest $request, Expenses $expenses)
+    public function update(UpdateTransacrionRequest $request, Transacrion $transacrion)
     {
         //
     }
@@ -76,10 +76,10 @@ class ExpensesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Expenses  $expenses
+     * @param  \App\Models\Transacrion  $transacrion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Expenses $expenses)
+    public function destroy(Transacrion $transacrion)
     {
         //
     }

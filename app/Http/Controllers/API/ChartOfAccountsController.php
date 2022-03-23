@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
+use App\Models\chartOfAccounts;
+use App\Http\Requests\StorechartOfAccountsRequest;
+use App\Http\Requests\UpdatechartOfAccountsRequest;
 
-use App\Models\Assets;
-use App\Http\Requests\StoreAssetsRequest;
-use App\Http\Requests\UpdateAssetsRequest;
-
-class AssetsController extends Controller
+class ChartOfAccountsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +30,10 @@ class AssetsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreAssetsRequest  $request
+     * @param  \App\Http\Requests\StorechartOfAccountsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAssetsRequest $request)
+    public function store(StorechartOfAccountsRequest $request)
     {
         //
     }
@@ -42,10 +41,10 @@ class AssetsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Assets  $assets
+     * @param  \App\Models\chartOfAccounts  $chartOfAccounts
      * @return \Illuminate\Http\Response
      */
-    public function show(Assets $assets)
+    public function show(chartOfAccounts $chartOfAccounts)
     {
         //
     }
@@ -53,10 +52,10 @@ class AssetsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Assets  $assets
+     * @param  \App\Models\chartOfAccounts  $chartOfAccounts
      * @return \Illuminate\Http\Response
      */
-    public function edit(Assets $assets)
+    public function edit(chartOfAccounts $chartOfAccounts)
     {
         //
     }
@@ -64,11 +63,11 @@ class AssetsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateAssetsRequest  $request
-     * @param  \App\Models\Assets  $assets
+     * @param  \App\Http\Requests\UpdatechartOfAccountsRequest  $request
+     * @param  \App\Models\chartOfAccounts  $chartOfAccounts
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAssetsRequest $request, Assets $assets)
+    public function update(UpdatechartOfAccountsRequest $request, chartOfAccounts $chartOfAccounts)
     {
         //
     }
@@ -76,10 +75,10 @@ class AssetsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Assets  $assets
+     * @param  \App\Models\chartOfAccounts  $chartOfAccounts
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Assets $assets)
+    public function destroy(chartOfAccounts $chartOfAccounts)
     {
         //
     }

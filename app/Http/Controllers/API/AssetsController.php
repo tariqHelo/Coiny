@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Models\Rules;
-use App\Http\Requests\StoreRulesRequest;
-use App\Http\Requests\UpdateRulesRequest;
+use App\Models\Assets;
+use App\Http\Requests\StoreAssetsRequest;
+use App\Http\Requests\UpdateAssetsRequest;
 
-class RulesController extends Controller
+class AssetsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class RulesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreRulesRequest  $request
+     * @param  \App\Http\Requests\StoreAssetsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRulesRequest $request)
+    public function store(StoreAssetsRequest $request)
     {
         //
     }
@@ -42,10 +42,10 @@ class RulesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Rules  $rules
+     * @param  \App\Models\Assets  $assets
      * @return \Illuminate\Http\Response
      */
-    public function show(Rules $rules)
+    public function show(Assets $assets)
     {
         //
     }
@@ -53,10 +53,10 @@ class RulesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Rules  $rules
+     * @param  \App\Models\Assets  $assets
      * @return \Illuminate\Http\Response
      */
-    public function edit(Rules $rules)
+    public function edit(Assets $assets)
     {
         //
     }
@@ -64,11 +64,11 @@ class RulesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateRulesRequest  $request
-     * @param  \App\Models\Rules  $rules
+     * @param  \App\Http\Requests\UpdateAssetsRequest  $request
+     * @param  \App\Models\Assets  $assets
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRulesRequest $request, Rules $rules)
+    public function update(UpdateAssetsRequest $request, Assets $assets)
     {
         //
     }
@@ -76,10 +76,10 @@ class RulesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Rules  $rules
+     * @param  \App\Models\Assets  $assets
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rules $rules)
+    public function destroy(Assets $assets)
     {
         //
     }

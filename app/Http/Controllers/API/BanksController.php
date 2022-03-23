@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Models\GeneralIncome;
-use App\Http\Requests\StoreGeneralIncomeRequest;
-use App\Http\Requests\UpdateGeneralIncomeRequest;
+use App\Models\Banks;
+use App\Http\Requests\StoreBanksRequest;
+use App\Http\Requests\UpdateBanksRequest;
 
-class GeneralIncomeController extends Controller
+class BanksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class GeneralIncomeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreGeneralIncomeRequest  $request
+     * @param  \App\Http\Requests\StoreBanksRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreGeneralIncomeRequest $request)
+    public function store(StoreBanksRequest $request)
     {
         //
     }
@@ -42,10 +42,10 @@ class GeneralIncomeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\GeneralIncome  $generalIncome
+     * @param  \App\Models\Banks  $banks
      * @return \Illuminate\Http\Response
      */
-    public function show(GeneralIncome $generalIncome)
+    public function show(Banks $banks)
     {
         //
     }
@@ -53,10 +53,10 @@ class GeneralIncomeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\GeneralIncome  $generalIncome
+     * @param  \App\Models\Banks  $banks
      * @return \Illuminate\Http\Response
      */
-    public function edit(GeneralIncome $generalIncome)
+    public function edit(Banks $banks)
     {
         //
     }
@@ -64,11 +64,11 @@ class GeneralIncomeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateGeneralIncomeRequest  $request
-     * @param  \App\Models\GeneralIncome  $generalIncome
+     * @param  \App\Http\Requests\UpdateBanksRequest  $request
+     * @param  \App\Models\Banks  $banks
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateGeneralIncomeRequest $request, GeneralIncome $generalIncome)
+    public function update(UpdateBanksRequest $request, Banks $banks)
     {
         //
     }
@@ -76,10 +76,10 @@ class GeneralIncomeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\GeneralIncome  $generalIncome
+     * @param  \App\Models\Banks  $banks
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GeneralIncome $generalIncome)
+    public function destroy(Banks $banks)
     {
         //
     }
