@@ -17,7 +17,7 @@ class TransactionFactory extends Factory
         return [
             'total' => $this->faker->randomFloat(4, 0, 10000),
             'type' => $type[rand(0, 1)],
-            'user_id' => $this->faker->numberBetween(1, 10),
+            'user_id' => $this->faker->unique()->numberBetween(1, 10),
         ];
     }
 }

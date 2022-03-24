@@ -20,12 +20,8 @@ class Transaction extends Model
     *
     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     */
-    public function user(): BelongsTo
+    public function user()
     {
        return $this->belongsTo(User::class);
-    }
-
-    public function total(){
-        
     }
 }

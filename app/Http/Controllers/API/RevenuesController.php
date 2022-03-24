@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 
-use App\Models\ExpensesRevenues;
-use App\Models\Transaction;
 use App\Http\Controllers\Api\BaseController as BaseController;
-use Validator;
+
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 
-
-class TransactionsController extends BaseController
+class RevenuesController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -40,7 +37,7 @@ class TransactionsController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         $validator = Validator::make($request->all(),[
             'amount' =>'required',
             'type' =>'required',
@@ -63,7 +60,6 @@ class TransactionsController extends BaseController
         }
         $success['amount'] = $transaction->total;
         return $this->sendResponse($success ,'Taransaction Added successfully');
-
     }
 
     /**
@@ -74,21 +70,13 @@ class TransactionsController extends BaseController
      */
     public function show($id)
     {
-      $expenses = Transaction::query()
-       ->where('user_id', $id)
-       ->where('type' , 'expenses')
-       ->get()
-       ->sum('total');
-       $revenues = Transaction::query()
+        $income = Transaction::query()
        ->where('user_id', $id)
        ->where('type' , 'revenues')
        ->get()
        ->sum('total');
-       
-      $total = $revenues - $expenses;
-      dd($total, $revenues, $expenses);
-
-
+      // dd($total);
+        return $this->sendResponse($income ,'All Data User Retirved successfully');  
     }
 
     /**
@@ -99,7 +87,7 @@ class TransactionsController extends BaseController
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -122,6 +110,6 @@ class TransactionsController extends BaseController
      */
     public function destroy($id)
     {
-    //  Customer::find($customer_id)->decrement('loyalty_points', 50);
+        //
     }
 }

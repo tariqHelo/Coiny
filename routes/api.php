@@ -7,7 +7,10 @@ use App\Http\Controllers\API\{
    UserController,
    TransactionsController,
    CategoryController,
-   NetIncomeController
+   NetIncomeController,
+   AssetsController,
+   RevenuesController,
+   ExpensesController
 };
 use App\Http\Resources\{
    ExpensesRevenuesResource,
@@ -41,6 +44,11 @@ Route::middleware(['auth:sanctum'])->group( function () {
     'taransaction' => TransactionsController::class,
     'category' => CategoryController::class,
     'net_income' => NetIncomeController::class,
+    'assets' => AssetsController::class,
+    'expenses' => ExpensesController::class,
+    'revenues' => RevenuesController::class,
+   'transactions' => TransactionsController::class,
+    
    ]);
    /// Will Return All Categories From DataBase
   // Route::post('/taransaction',[TransactionsController::class , 'store']);

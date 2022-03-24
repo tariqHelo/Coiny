@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Api\BaseController as BaseController;
-use App\Models\Assets;
-use App\Http\Requests\StoreAssetsRequest;
-use App\Http\Requests\UpdateAssetsRequest;
+use App\Models\Budget;
+use App\Http\Requests\StoreBudgetRequest;
+use App\Http\Requests\UpdateBudgetRequest;
 
-class AssetsController extends BaseController
+class BudgetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,10 +31,10 @@ class AssetsController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreAssetsRequest  $request
+     * @param  \App\Http\Requests\StoreBudgetRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAssetsRequest $request)
+    public function store(StoreBudgetRequest $request)
     {
         //
     }
@@ -43,23 +42,21 @@ class AssetsController extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Assets  $assets
+     * @param  \App\Models\Budget  $budget
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Budget $budget)
     {
-       // dd(20);
-        $total = Assets::query()->where('user_id', $id)->get()->sum('value');
-        return $this->sendResponse($total ,'All Data User Assets Retirved successfully');
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Assets  $assets
+     * @param  \App\Models\Budget  $budget
      * @return \Illuminate\Http\Response
      */
-    public function edit(Assets $assets)
+    public function edit(Budget $budget)
     {
         //
     }
@@ -67,11 +64,11 @@ class AssetsController extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateAssetsRequest  $request
-     * @param  \App\Models\Assets  $assets
+     * @param  \App\Http\Requests\UpdateBudgetRequest  $request
+     * @param  \App\Models\Budget  $budget
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAssetsRequest $request, Assets $assets)
+    public function update(UpdateBudgetRequest $request, Budget $budget)
     {
         //
     }
@@ -79,10 +76,10 @@ class AssetsController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Assets  $assets
+     * @param  \App\Models\Budget  $budget
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Assets $assets)
+    public function destroy(Budget $budget)
     {
         //
     }

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
-
-class NetIncomeController extends Controller
+use App\Http\Controllers\Api\BaseController as BaseController;
+class NetIncomeController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -46,19 +46,22 @@ class NetIncomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {         
-        $net = Transaction::query()->where('user_id' , '=', $id)->get()->map(function ($net){
-             return [
-                 //'net' => [$net->total],
-                 'id' => $net->id,
-                 'total' => $net->total,
-                 'type'=> $net->type,
-                 'user_id'=> $net->user_id,
-             ];
-         })->groupBy('type')->toArray();
-         dd($net);
-      // $user =  Transaction::where('user_id' , '=', $id)->get();
-       return CategoryResource::collection($user);
+    {
+        $total = Transaction::query()->where('user_id', $id)->get()->sum('total');
+        $net = collect(Transaction::query()->where('user_id', $id)->get())->map(function ($net) use ($total) {
+            return [
+                'total' => $net->total,
+                'type' => $net->type,
+                'user_id' => $net->user_id,
+                'user_name' => $net->user->name,
+            ];
+        })->groupBy('type');
+        $success = [
+            'NetIncome' => $total,
+            'net' => $net,
+        ];
+        return $this->sendResponse($success ,'All Data User Retirved successfully');
+       // dd($net);
     }
 
     /**
