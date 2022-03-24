@@ -20,7 +20,7 @@ class AssetsFactory extends Factory
             'useful_life' => $this->faker->numberBetween(5, 15),
             'depreciation' => $this->faker->numberBetween(1, 8),
             'value' => $this->faker->randomFloat(4, 0, 10000),
-            'user_id' => $this->faker->unique()->numberBetween(1, 10),
+            'user_id' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

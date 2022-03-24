@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\CategoryResource;
+
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
@@ -63,9 +65,12 @@ class CategoryController extends BaseController
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        //
+       //dd($id);
+       $user =  Category::where('user_id' , '=', $id)->get();
+      // dd($user);
+       return CategoryResource::collection($user);
     }
 
     /**

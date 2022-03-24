@@ -3,15 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-
-use App\Models\ExpensesRevenues;
-use App\Models\Transaction;
-use App\Http\Controllers\Api\BaseController as BaseController;
-use Validator;
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 
-
-class TransactionsController extends BaseController
+class NetIncomeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -40,30 +35,8 @@ class TransactionsController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-        $validator = Validator::make($request->all(),[
-            'amount' =>'required',
-            'type' =>'required',
-            'user_id' =>'required',
-            'category_id' =>'required',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Please validate error' ,$validator->errors() );
-        }
-        $transaction = ExpensesRevenues::create($request->all());
-        if(Transaction::find($transaction->user_id)){
-            Transaction::find($transaction->user_id)->increment('total' ,$transaction->amount);    
-        }else{
-         $transaction =  Transaction::create([
-            'total' => $transaction->amount,
-            'type' => $transaction->type,
-            'user_id' =>$transaction->user_id,
-          ]);
-        }
-        $success['amount'] = $transaction->total;
-        return $this->sendResponse($success ,'Taransaction Added successfully');
-
+    {
+        //
     }
 
     /**
@@ -73,8 +46,19 @@ class TransactionsController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {         
+        $net = Transaction::query()->where('user_id' , '=', $id)->get()->map(function ($net){
+             return [
+                 //'net' => [$net->total],
+                 'id' => $net->id,
+                 'total' => $net->total,
+                 'type'=> $net->type,
+                 'user_id'=> $net->user_id,
+             ];
+         })->groupBy('type')->toArray();
+         dd($net);
+      // $user =  Transaction::where('user_id' , '=', $id)->get();
+       return CategoryResource::collection($user);
     }
 
     /**
@@ -108,6 +92,6 @@ class TransactionsController extends BaseController
      */
     public function destroy($id)
     {
-    //  Customer::find($customer_id)->decrement('loyalty_points', 50);
+        //
     }
 }

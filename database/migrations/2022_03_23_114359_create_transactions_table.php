@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTransacrionsTable extends Migration
+class CreateTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateTransacrionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transacrions', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->float('total');
+            $table->enum('type',['expenses' , 'revenues']);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
@@ -28,6 +29,6 @@ class CreateTransacrionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transacrions');
+        Schema::dropIfExists('transactions');
     }
 }

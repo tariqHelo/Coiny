@@ -13,8 +13,13 @@ class BankAccounts extends Model
      
      
 
-    public function user()
+    /**
+    * Get the user that owns the ExpensesRevenues
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+       return $this->belongsTo(User::class)->select('name');
     }
 }

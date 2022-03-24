@@ -9,7 +9,14 @@ class Rules extends Model
 {
     use HasFactory;
 
-     protected $guarded = [];
+     protected $fillable = [
+        'icon',
+        'amount',
+        'category_id',
+         'note',
+        'type',
+        'user_id'
+    ];
 
 
     public function user()

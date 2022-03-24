@@ -17,16 +17,26 @@ class ExpensesRevenues extends Model
             'category_id' 
     ];
        
-    public function user()
+   /**
+    * Get the user that owns the ExpensesRevenues
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class)->select('name');
+       return $this->belongsTo(User::class)->select('name');
     }
-
-    public function category()
+    
+    /**
+    * Get the user that owns the ExpensesRevenues
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class)->select('name');
-    }
-
+       return $this->belongsTo(Category::class)->select('name');
+    } 
+   
     public function total()
     {
         return $this->sum('amount');

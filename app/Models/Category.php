@@ -17,8 +17,26 @@ class Category extends Model
      
      
 
-    public function user()
+    /**
+    * Get the user that owns the ExpensesRevenues
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+       return $this->belongsTo(User::class)->select('name');
     }
+
+
+    public function getImageUrlAttribute()
+    {
+        if (!$this->icon) {
+            return asset('images/placeholder.png');
+        }
+        if (stripos($this->icon, 'http') === 0) {
+            return $this->icon;
+        }
+        return asset('uploads/' . $this->icon);
+    }
+
 }
