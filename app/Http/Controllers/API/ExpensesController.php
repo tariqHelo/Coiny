@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\BaseController as BaseController;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\User;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class ExpensesController extends BaseController
 {
@@ -17,7 +17,7 @@ class ExpensesController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
 
        $total = User::query()->where('id',auth()->id())->first();
         $success =  [
@@ -46,7 +46,7 @@ class ExpensesController extends BaseController
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $rules = [
             'amount' => ['int', 'min:1', function($attr, $value, $fail) {
                 $id = auth()->id;
                 $basket = Transaction::find($id);
@@ -55,17 +55,34 @@ class ExpensesController extends BaseController
                     $fail(__('الكمية المطلوبة أكبر من القيمة المخزنة'));
                 }
             }],
-            
             'type' =>'required',
             'user_id' =>'required',
             'category_id' =>'required',
-        ]);
+        ];
+        $validator = Validator::make(request()->all(), $rules);
+//        dd($rules);
         if ($validator->fails()) {
             return $this->sendError('Please validate error' ,$validator->errors() );
         }
+
+//        $validator = \Illuminate\Support\Facades\Validator::make($request->all(),[
+////            'amount' => ['int', 'min:1', function($attr, $value, $fail) {
+////                $id = auth()->id;
+////                $basket = Transaction::find($id);
+////               // dd($basket);
+////                if ($value > $basket->total) {
+////                    $fail(__('الكمية المطلوبة أكبر من القيمة المخزنة'));
+////                }
+////            }],
+//
+//            'type' =>'required',
+//            'user_id' =>'required',
+//            'category_id' =>'required',
+//        ]);
+
         // $transaction = ExpensesRevenues::create($request->all());
         // if(Transaction::find($transaction->user_id)){
-        //     Transaction::find($transaction->user_id)->increment('total' ,$transaction->amount);    
+        //     Transaction::find($transaction->user_id)->increment('total' ,$transaction->amount);
         // }else{
         //  $transaction =  Transaction::create([
         //     'total' => $transaction->amount,
@@ -84,9 +101,9 @@ class ExpensesController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {  
+    {
        // dd($id);
-         
+
     }
 
     /**
