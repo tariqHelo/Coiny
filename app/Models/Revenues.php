@@ -8,15 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Revenues extends Model
 {
     use HasFactory;
-
+        
     protected $fillable = [
             'amount',
             'note',
             'type',
             'user_id',
             'category_id' 
-    ];
-       
+    ]; 
    /**
     * Get the user that owns the Revenues
     *
@@ -36,9 +35,4 @@ class Revenues extends Model
     {
        return $this->belongsTo(Category::class)->select('name');
     } 
-   
-    public function total()
-    {
-        return $this->sum('amount');
-    }
 }

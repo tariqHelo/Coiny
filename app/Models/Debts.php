@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Budget extends Model
+class Debts extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
+     protected $fillable = [
             'amount',
-            'period',
-            'category_id',
+            'name',
+            'type',
             'user_id',
-    ];
+    ]; 
 }

@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     use HasFactory;
-
+    
+  //  protected $table = ['']
      protected $fillable = [
         'total',
-        'type',
+      //  'type',
         'user_id',
     ];
 
@@ -20,8 +21,8 @@ class Transaction extends Model
     *
     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     */
-    public function user()
-    {
-       return $this->belongsTo(User::class);
-    }
+    // public function user()
+    // {
+    //    return $this->belongsTo(User::class);
+    // }
 }

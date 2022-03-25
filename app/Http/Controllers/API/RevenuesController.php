@@ -6,7 +6,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Api\BaseController as BaseController;
 
 use Illuminate\Http\Request;
-use App\Models\Transaction;
+use App\Models\User;
+use Validator;
 
 class RevenuesController extends BaseController
 {
@@ -17,7 +18,11 @@ class RevenuesController extends BaseController
      */
     public function index()
     {
-        //
+        $total = User::query()->where('id',auth()->id())->first();
+        $success =  [
+             'revenues' => $total->revenuesTransactions() ,
+        ];
+        return $this->sendResponse($success ,'Revenues Retirved successfully');  
     }
 
     /**
@@ -38,28 +43,7 @@ class RevenuesController extends BaseController
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'amount' =>'required',
-            'type' =>'required',
-            'user_id' =>'required',
-            'category_id' =>'required',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Please validate error' ,$validator->errors() );
-        }
-        $transaction = ExpensesRevenues::create($request->all());
-        if(Transaction::find($transaction->user_id)){
-            Transaction::find($transaction->user_id)->increment('total' ,$transaction->amount);    
-        }else{
-         $transaction =  Transaction::create([
-            'total' => $transaction->amount,
-            'type' => $transaction->type,
-            'user_id' =>$transaction->user_id,
-          ]);
-        }
-        $success['amount'] = $transaction->total;
-        return $this->sendResponse($success ,'Taransaction Added successfully');
+        
     }
 
     /**
@@ -70,13 +54,7 @@ class RevenuesController extends BaseController
      */
     public function show($id)
     {
-        $income = Transaction::query()
-       ->where('user_id', $id)
-       ->where('type' , 'revenues')
-       ->get()
-       ->sum('total');
-      // dd($total);
-        return $this->sendResponse($income ,'All Data User Retirved successfully');  
+       
     }
 
     /**

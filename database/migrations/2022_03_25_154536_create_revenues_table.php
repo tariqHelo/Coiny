@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGeneralIncomesTable extends Migration
+class CreateRevenuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateGeneralIncomesTable extends Migration
      */
     public function up()
     {
-        Schema::create('general_incomes', function (Blueprint $table) {
+        Schema::create('revenues', function (Blueprint $table) {
             $table->id();
-            $table->string('icon');
             $table->float('amount');
             $table->longText('note');
-            $table->enum('type',['expenses' , 'revenues']);
+            $table->enum('type',['revenues']);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');   
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateGeneralIncomesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('general_incomes');
+        Schema::dropIfExists('revenues');
     }
 }

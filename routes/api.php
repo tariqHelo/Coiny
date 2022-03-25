@@ -44,16 +44,12 @@ Route::middleware(['auth:sanctum'])->group( function () {
     'taransaction' => TransactionsController::class,
     'category' => CategoryController::class,
     'net_income' => NetIncomeController::class,
-    'assets' => AssetsController::class,
     'expenses' => ExpensesController::class,
     'revenues' => RevenuesController::class,
-   'transactions' => TransactionsController::class,
-    
+    'assets' => TransactionsController::class,
+    'transactions' => TransactionsController::class,
    ]);
-   /// Will Return All Categories From DataBase
-  // Route::post('/taransaction',[TransactionsController::class , 'store']);
-   /// Will Return All Categories From DataBase
-  // Route::post('/category',[CategoryController::class , 'store']);
+
    /// Logout User 
    Route::post('/logout',[RegisterController::class, 'logout']);
 

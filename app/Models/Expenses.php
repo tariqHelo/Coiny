@@ -5,21 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ExpensesRevenues extends Model
+class Expenses extends Model
 {
     use HasFactory;
-    
-    protected $table = ['expenses_revenues'];
-    
+
     protected $fillable = [
             'amount',
             'note',
             'type',
             'user_id',
             'category_id' 
-    ]; 
-   /**
-    * Get the user that owns the Expenses
+    ];
+
+    /**
+    * Get the user that owns the Revenues
     *
     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     */
@@ -37,4 +36,6 @@ class ExpensesRevenues extends Model
     {
        return $this->belongsTo(Category::class)->select('name');
     } 
+    
+   
 }

@@ -13,10 +13,9 @@ class TransactionFactory extends Factory
      */
     public function definition()
     {   
-        $type = ['expenses' , 'revenues'];
+       // $type = ['expenses' , 'revenues'];
         return [
-            'total' => $this->faker->randomFloat(4, 0, 10000),
-            'type' => $type[rand(0, 1)],
+            'total' => $this->faker->randomFloat(2, 0, 1000),
             'user_id' => $this->faker->unique()->numberBetween(1, 10),
         ];
     }

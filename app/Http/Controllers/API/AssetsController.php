@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Api\BaseController as BaseController;
-use App\Models\Assets;
+use App\Models\User;
 use App\Http\Requests\StoreAssetsRequest;
 use App\Http\Requests\UpdateAssetsRequest;
 
@@ -15,8 +15,14 @@ class AssetsController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   
+        $total = User::query()->where('id',auth()->id())->first();
+        $success =  [
+            // 'revenues' => $total->revenuesTransactions() ,
+             'Assets' => $total->assetsResult(),
+        ];
+       //dd($total);
+        return $this->sendResponse($success ,'Assets Retirved successfully');
     }
 
     /**
@@ -49,8 +55,7 @@ class AssetsController extends BaseController
     public function show($id)
     {
        // dd(20);
-        $total = Assets::query()->where('user_id', $id)->get()->sum('value');
-        return $this->sendResponse($total ,'All Data User Assets Retirved successfully');
+       
     }
 
     /**

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 
 use App\Models\ExpensesRevenues;
 use App\Models\Transaction;
+use App\Models\Revenues;
+use App\Models\User;
+
 use App\Http\Controllers\Api\BaseController as BaseController;
 use Validator;
 use Illuminate\Http\Request;
@@ -19,8 +22,15 @@ class TransactionsController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   
+        $total = User::query()->where('id',auth()->id())->first();
+        //dd($total);
+        $success =  [
+            'TotalWealth' => $total->totalWealth(),
+        ];
+
+       return $this->sendResponse($success ,'TotalWealth for User Retirved successfully');
+
     }
 
     /**
@@ -41,29 +51,28 @@ class TransactionsController extends BaseController
      */
     public function store(Request $request)
     {   
-        $validator = Validator::make($request->all(),[
-            'amount' =>'required',
-            'type' =>'required',
-            'user_id' =>'required',
-            'category_id' =>'required',
-        ]);
+        // $validator = Validator::make($request->all(),[
+        //     'amount' =>'required',
+        //     'type' =>'required',
+        //     'user_id' =>'required',
+        //     'category_id' =>'required',
+        // ]);
 
-        if ($validator->fails()) {
-            return $this->sendError('Please validate error' ,$validator->errors() );
-        }
-        $transaction = ExpensesRevenues::create($request->all());
-        if(Transaction::find($transaction->user_id)){
-            Transaction::find($transaction->user_id)->increment('total' ,$transaction->amount);    
-        }else{
-         $transaction =  Transaction::create([
-            'total' => $transaction->amount,
-            'type' => $transaction->type,
-            'user_id' =>$transaction->user_id,
-          ]);
-        }
-        $success['amount'] = $transaction->total;
-        return $this->sendResponse($success ,'Taransaction Added successfully');
-
+        // if ($validator->fails()) {
+        //     return $this->sendError('Please validate error' ,$validator->errors() );
+        // }
+        // $transaction = ExpensesRevenues::create($request->all());
+        // if(Transaction::find($transaction->user_id)){
+        //     Transaction::find($transaction->user_id)->increment('total' ,$transaction->amount);    
+        // }else{
+        //  $transaction =  Transaction::create([
+        //     'total' => $transaction->amount,
+        //     'type' => $transaction->type,
+        //     'user_id' =>$transaction->user_id,
+        //   ]);
+        // }
+        // $success['amount'] = $transaction->total;
+        // return $this->sendResponse($success ,'Taransaction Added successfully');
     }
 
     /**
@@ -74,19 +83,7 @@ class TransactionsController extends BaseController
      */
     public function show($id)
     {
-      $expenses = Transaction::query()
-       ->where('user_id', $id)
-       ->where('type' , 'expenses')
-       ->get()
-       ->sum('total');
-       $revenues = Transaction::query()
-       ->where('user_id', $id)
-       ->where('type' , 'revenues')
-       ->get()
-       ->sum('total');
-       
-      $total = $revenues - $expenses;
-      dd($total, $revenues, $expenses);
+      
 
 
     }

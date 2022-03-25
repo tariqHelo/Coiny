@@ -19,7 +19,9 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        //
+        $user =  Category::where('user_id' ,auth()->id())->get();
+       // dd($user);
+        return CategoryResource::collection($user);
     }
 
     /**
@@ -68,9 +70,7 @@ class CategoryController extends BaseController
     public function show($id)
     {
        //dd($id);
-       $user =  Category::where('user_id' , '=', $id)->get();
-      // dd($user);
-       return CategoryResource::collection($user);
+       
     }
 
     /**
