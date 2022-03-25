@@ -48,7 +48,7 @@ class ExpensesController extends BaseController
     {
         $rules = [
             'amount' => ['int', 'min:1', function($attr, $value, $fail) {
-                $id = auth()->id;
+                $id = auth()->id();
                 $basket = Transaction::find($id);
                // dd($basket);
                 if ($value > $basket->total) {
