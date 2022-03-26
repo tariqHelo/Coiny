@@ -10,7 +10,9 @@ use App\Http\Controllers\API\{
    NetIncomeController,
    AssetsController,
    RevenuesController,
-   ExpensesController
+   ExpensesController,
+   BudgetController,
+   BanksController
 };
 use App\Http\Resources\{
    ExpensesRevenuesResource,
@@ -35,19 +37,21 @@ use App\Models\{
 //     return $request->user();
 // });
 
-Route::post('register', [RegisterController::class, 'register']);
+Route::post('new_register', [RegisterController::class, 'register']);
  Route::post('login', [RegisterController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group( function () {
    
    Route::apiResources([
-    'taransaction' => TransactionsController::class,
-    'category' => CategoryController::class,
-    'net_income' => NetIncomeController::class,
-    'expenses' => ExpensesController::class,
-    'revenues' => RevenuesController::class,
-    'assets' => TransactionsController::class,
-    'transactions' => TransactionsController::class,
+    'taransaction'  => TransactionsController::class,
+    'category'      => CategoryController::class,
+    'net_income'    => NetIncomeController::class,
+    'expenses'      => ExpensesController::class,
+    'revenues'      => RevenuesController::class,
+    'assets'        => AssetsController::class,
+    'transactions'  => TransactionsController::class,
+    'budget'        => BudgetController::class,
+    'banks'         => BanksController::class,
    ]);
 
    /// Logout User 

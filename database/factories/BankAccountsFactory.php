@@ -12,12 +12,14 @@ class BankAccountsFactory extends Factory
      * @return array
      */
     public function definition()
-    {
+    {    
+        //dd(20);
+        $type = ['Current', 'Savings']; 
         return [
-            'name' => $this->faker->name(),
-            'address' => $this->faker->address,
-            'total_balance' => $this->faker->randomFloat(2, 0, 10000),
-            'user_id' => $this->faker->unique()->numberBetween(1, 10),
+            'currency' => $this->faker->currencyCode,
+            'amount' => $this->faker->randomFloat(1, 0, 100),
+            'type' =>  $type[rand(0, 1)],
+            'bank_id' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

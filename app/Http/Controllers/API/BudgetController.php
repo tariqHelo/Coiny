@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Api\BaseController as BaseController;
 
 use App\Models\Budget;
 use App\Http\Requests\StoreBudgetRequest;
 use App\Http\Requests\UpdateBudgetRequest;
 
-class BudgetController extends Controller
+class BudgetController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +17,11 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        //
+        $total = Budget::query()->where('user_id', \Auth::user()->id)->get()->sum('amount');
+        $success =  [
+             'budget' => $total,
+        ];
+        return $this->sendResponse($success ,'Budget Retirved successfully');  
     }
 
     /**

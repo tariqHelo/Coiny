@@ -26,4 +26,13 @@ class Banks extends Model
     {
        return $this->belongsTo(User::class)->select('name');
     }
+
+    public function accounts()
+    {
+        return $this->hasMany(BankAccounts::class);
+    }
+
+    public function totalAccounts(){
+        return $this->accounts()->sum('amount');
+    }
 }

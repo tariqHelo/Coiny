@@ -6,8 +6,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Api\BaseController as BaseController;
 
 use Illuminate\Http\Request;
+use App\Models\Revenues;
 use App\Models\User;
 use Validator;
+
+
 
 class RevenuesController extends BaseController
 {
@@ -17,12 +20,25 @@ class RevenuesController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $total = User::query()->where('id',auth()->id())->first();
-        $success =  [
-             'revenues' => $total->revenuesTransactions() ,
+    {    
+        $total = Revenues::query()->where('user_id', \Auth::user()->id);
+        $net = collect($total->get())->map(function ($net) {
+            return [
+                'amount' => $net->amount,
+                'category' => $net->category->name,
+                'user_name' => $net->user->name,
+            ];
+        })->groupBy('id');
+        $success = [
+            'all amounts' => $net,
+            'total' => $total->get()->sum('amount'),
         ];
-        return $this->sendResponse($success ,'Revenues Retirved successfully');  
+        return $this->sendResponse($success ,'Revenues Retirved successfully');
+        // $total = User::query()->where('id',auth()->id())->first();
+        // $success =  [
+        //      'revenues' => $total->revenuesTransactions() ,
+        // ];
+        // return $this->sendResponse($success ,'Revenues Retirved successfully');  
     }
 
     /**
@@ -43,7 +59,24 @@ class RevenuesController extends BaseController
      */
     public function store(Request $request)
     {
-        
+       $id = Transaction::query()->where('user_id', auth()->id())->first();
+       // dd($basket);
+        $rules = [
+            'type' =>'required',
+            'user_id' =>'required',
+            'category_id' =>'required',
+            'amount' => ['numeric', 'min:1','lte:'.$id->total],
+        ];
+        $validator = Validator::make(request()->all(), $rules);
+        if ($validator->fails()) {
+            return $this->sendError('Please validate error' ,$validator->errors() );
+        }
+       // dd('sucess');
+        $transaction = Expenses::create($request->all());
+        $balance = $id->decrement('total' ,$transaction->amount);
+        //dd($ss);
+        $success['balance'] = $balance - $transaction->amount;
+        return $this->sendResponse($success ,'Taransaction Added successfully'); 
     }
 
     /**

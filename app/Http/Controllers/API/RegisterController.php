@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 use App\Models\User;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Api\BaseController as BaseController;
+use App\Http\Controllers\API\BaseController as BaseController;
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +29,8 @@ class RegisterController extends BaseController
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
                 'password' => \Hash::make($request->password),
                 'type' => 'User'
             ]);
@@ -47,7 +49,10 @@ class RegisterController extends BaseController
         
             $user = Auth::User();
             $success['token'] = $user->createToken('password')->plainTextToken;
+            $success['id'] = $user->id;
             $success['name'] = $user->name;
+            $success['phone'] = $user->phone;
+            $success['email'] = $user->email;
             return $this->sendResponse($success ,'User login successfully');
         }
         else{

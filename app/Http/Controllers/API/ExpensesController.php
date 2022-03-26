@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+
 use App\Http\Controllers\Api\BaseController as BaseController;
 use App\Models\Transaction;
 use App\Models\User;
@@ -17,11 +18,20 @@ class ExpensesController extends BaseController
      */
     public function index()
     {
-
-        $total = User::query()->where('id', auth()->id())->first();
+         //dd(20)
+        $id = \Auth::user()->id;
+        $total = Expenses::query()->where('user_id', $id)->get();
+        $net = collect($total->groupBy('id')->get())->map(function ($net) {
+            return [
+                'amount' => $net->amount,
+                'category' => $net->category->name,
+                'user_name' => $net->user->name,
+            ];
+        });
+        //dd($net);
         $success = [
-            // 'revenues' => $total->revenuesTransactions() ,
-            'expenses' => $total->expensesTransactions(),
+            'all amounts' => $net,
+            'total' => $total->sum('amount'),
         ];
         //dd($total);
         return $this->sendResponse($success, 'Expenses Retirved successfully');
@@ -44,49 +54,26 @@ class ExpensesController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $basket = Transaction::query()->where('user_id', auth()->id())->first()->sum('total');
-
+    {   
+       
+        $id = Transaction::query()->where('user_id', auth()->id())->first();
+       // dd($basket);
         $rules = [
-            'amount' => ['int', 'min:1','lte:'.$basket],
-            'type' => 'required',
-            'user_id' => 'required',
-            'category_id' => 'required',
+            'type' =>'required',
+            'user_id' =>'required',
+            'category_id' =>'required',
+            'amount' => ['numeric', 'min:1','lte:'.$id->total],
         ];
         $validator = Validator::make(request()->all(), $rules);
-//        dd($rules);
         if ($validator->fails()) {
             return $this->sendError('Please validate error', $validator->errors());
         }
-        dd('sucess');
-
-//        $validator = \Illuminate\Support\Facades\Validator::make($request->all(),[
-////            'amount' => ['int', 'min:1', function($attr, $value, $fail) {
-////                $id = auth()->id;
-////                $basket = Transaction::find($id);
-////               // dd($basket);
-////                if ($value > $basket->total) {
-////                    $fail(__('الكمية المطلوبة أكبر من القيمة المخزنة'));
-////                }
-////            }],
-//
-//            'type' =>'required',
-//            'user_id' =>'required',
-//            'category_id' =>'required',
-//        ]);
-
-        // $transaction = ExpensesRevenues::create($request->all());
-        // if(Transaction::find($transaction->user_id)){
-        //     Transaction::find($transaction->user_id)->increment('total' ,$transaction->amount);
-        // }else{
-        //  $transaction =  Transaction::create([
-        //     'total' => $transaction->amount,
-        //     'type' => $transaction->type,
-        //     'user_id' =>$transaction->user_id,
-        //   ]);
-        // }
-        // $success['amount'] = $transaction->total;
-        // return $this->sendResponse($success ,'Taransaction Added successfully');
+       // dd('sucess');
+        $transaction = Expenses::create($request->all());
+        $balance = $id->decrement('total' ,$transaction->amount);
+        //dd($ss);
+        $success['balance'] = $balance - $transaction->amount;
+        return $this->sendResponse($success ,'Taransaction Added successfully');
     }
 
     /**

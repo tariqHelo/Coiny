@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
        // \App\Models\User::factory(10)->create();
        // \App\Models\Category::factory(10)->create();
-         \App\Models\Expenses::factory(10)->create();
+       //  \App\Models\Expenses::factory(10)->create();
        //   \App\Models\Revenues::factory(10)->create();
        //  \App\Models\Assets::factory(10)->create();
          // \App\Models\Banks::factory(10)->create();
@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
          //  \App\Models\Transaction::factory(10)->create();
           //  \App\Models\Debts::factory(10)->create();
           //   \App\Models\DebtsPayments::factory(10)->create();
+           \App\Models\BankAccounts::factory(15)->create();
     }
 }

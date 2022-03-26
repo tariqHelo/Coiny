@@ -1,12 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\API;
+use App\Http\Controllers\Api\BaseController as BaseController;
 
 use App\Models\Banks;
+use App\Models\BankAccounts;
+
+
 use App\Http\Requests\StoreBanksRequest;
 use App\Http\Requests\UpdateBanksRequest;
 
-class BanksController extends Controller
+class BanksController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +19,23 @@ class BanksController extends Controller
      */
     public function index()
     {
-        //
+        $bank = Banks::query()->where('user_id', \Auth::user()->id)->first();
+        $bankAccounts = BankAccounts::query()->where('bank_id', $bank->id)->get();
+        $accounts = collect($bankAccounts)->map(function ($accounts) {
+            return [
+                 'currency' => $accounts->currency,
+                 'amount' => $accounts->amount,
+                 'bank_name' => $accounts->bank->name,
+            ];
+        });
+        //dd($accounts);
+        $success =  [
+          'main_bank_name' => $bank->name,
+          'main_bank_balance' => $bank->total_balance,
+          'accounts' => $accounts,
+          'total_balance' => $bankAccounts->sum('amount') + $bank->total_balance,
+        ];
+        return $this->sendResponse($success ,'Bank Accounts Retirved successfully');
     }
 
     /**

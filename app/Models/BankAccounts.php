@@ -9,7 +9,12 @@ class BankAccounts extends Model
 {
     use HasFactory;
 
-     protected $guarded = [];
+      protected $fillable = [
+            'currency',
+            'amount',
+            'bank_id',
+            'type',
+    ];
      
      
 
@@ -21,5 +26,10 @@ class BankAccounts extends Model
     public function user()
     {
        return $this->belongsTo(User::class)->select('name');
+    }
+
+     public function bank()
+    {
+        return $this->belongsTo(Banks::class);
     }
 }

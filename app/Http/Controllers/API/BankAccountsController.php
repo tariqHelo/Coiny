@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateBankAccountsRequest;
 
 class BankAccountsController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *

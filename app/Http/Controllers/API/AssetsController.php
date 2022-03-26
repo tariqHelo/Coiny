@@ -9,13 +9,16 @@ use App\Http\Requests\UpdateAssetsRequest;
 
 class AssetsController extends BaseController
 {
+
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {    
+       // dd(20);
         $total = User::query()->where('id',auth()->id())->first();
         $success =  [
             // 'revenues' => $total->revenuesTransactions() ,
