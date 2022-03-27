@@ -13,5 +13,11 @@ class Debts extends Model
             'name',
             'type',
             'user_id',
-    ]; 
+    ];
+    
+  
+    public function debtsPayments(){
+      return  $this->hasMany(DebtsPayments::class);
+    }
+
 }

@@ -12,6 +12,9 @@ class DebtsPayments extends Model
      protected $fillable = [
             'amount',
             'debt_id',
-            'date' 
-    ]; 
+    ];
+    
+     public function debt(){
+       return $this->belongsTo(Debts::class);
+    }
 }

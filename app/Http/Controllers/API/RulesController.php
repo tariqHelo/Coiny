@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Api\BaseController as BaseController;
+
 use App\Models\Rules;
 use App\Http\Requests\StoreRulesRequest;
 use App\Http\Requests\UpdateRulesRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
-class RulesController extends Controller
+class RulesController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +18,23 @@ class RulesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   
+        $rule = Rules::query()->where('user_id', \Auth::user()->id);
+      //  dd($rule);
+        $rules = collect($rule->get())->map(function ($rules) {
+            return [
+                 'amount' => $rules->amount,
+                 'name' => $rules->name,
+                 'category_name' => $rules->category->name,
+                 'period' => $rules->period,
+                 'created_at' => $rules->created_at->format('Y-m-d'),
+            ];
+        });
+         $success =  [
+            'user_name' => \Auth::user()->name,
+            'rules' => $rules,
+        ];
+        return $this->sendResponse($success ,'Rules Retirved successfully'); 
     }
 
     /**
@@ -34,9 +53,27 @@ class RulesController extends Controller
      * @param  \App\Http\Requests\StoreRulesRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRulesRequest $request)
+    public function store(Request $request)
     {
-        //
+       // $rule = Rules::query()->where('user_id', auth()->id())->first();
+        $rules = [
+            'amount' => 'required|numeric|between:1,99999999999999',
+            'name' => 'requird',
+            'category_name' => 'requird',
+            'period' => 'requird|numeric',
+        ];
+        $validator = Validator::make(request()->all(), $rules);
+        if ($validator->fails()) {
+            return $this->sendError('Please validate error', $validator->errors());
+        }
+        $rule = Rules::create([
+                 'amount' => $request->amount,
+                 'name' => $request->name,
+                 'category_id' => $request->category_id,
+                 'period' => $request->period,
+                 'user_id' => \Auth::user()->id,
+            ]);
+        return $this->sendResponse($rule ,'Rules Added successfully');
     }
 
     /**

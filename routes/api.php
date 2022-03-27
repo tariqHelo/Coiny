@@ -12,15 +12,14 @@ use App\Http\Controllers\API\{
    RevenuesController,
    ExpensesController,
    BudgetController,
-   BanksController
+   BanksController,
+   DebtsController,
+   DebtsPaymentsController,
+   RulesController
 };
 use App\Http\Resources\{
    ExpensesRevenuesResource,
 };
-use App\Models\{
-   ExpensesRevenues,
-};
-
 
 /*
 |--------------------------------------------------------------------------
@@ -43,15 +42,18 @@ Route::post('new_register', [RegisterController::class, 'register']);
 Route::middleware(['auth:sanctum'])->group( function () {
    
    Route::apiResources([
-    'taransaction'  => TransactionsController::class,
-    'category'      => CategoryController::class,
-    'net_income'    => NetIncomeController::class,
-    'expenses'      => ExpensesController::class,
-    'revenues'      => RevenuesController::class,
-    'assets'        => AssetsController::class,
-    'transactions'  => TransactionsController::class,
-    'budget'        => BudgetController::class,
-    'banks'         => BanksController::class,
+    'taransaction'   => TransactionsController::class,
+    'category'       => CategoryController::class,
+    'net_income'     => NetIncomeController::class,
+    'expenses'       => ExpensesController::class,
+    'revenues'       => RevenuesController::class,
+    'assets'         => AssetsController::class,
+    'transactions'   => TransactionsController::class,
+    'budget'         => BudgetController::class,
+    'banks'          => BanksController::class,
+    'debts'          => DebtsController::class,
+    'debts_payments' => DebtsPaymentsController::class,
+    'rules'          => RulesController::class,
    ]);
 
    /// Logout User 

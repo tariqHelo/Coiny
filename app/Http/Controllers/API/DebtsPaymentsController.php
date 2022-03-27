@@ -1,12 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Api\BaseController as BaseController;
+
+use App\Models\Debts;
 use App\Models\DebtsPayments;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 use App\Http\Requests\StoreDebtsPaymentsRequest;
 use App\Http\Requests\UpdateDebtsPaymentsRequest;
 
-class DebtsPaymentsController extends Controller
+class DebtsPaymentsController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -34,9 +40,26 @@ class DebtsPaymentsController extends Controller
      * @param  \App\Http\Requests\StoreDebtsPaymentsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDebtsPaymentsRequest $request)
+    public function store(Request $request)
     {
-        //
+        $dbt = Debts::query()->where('user_id', auth()->id())->first();
+       // dd($id->amount);
+       // dd($basket);
+        $rules = [
+            // 'amount' => 'required',
+             'amount' => 'required|numeric|between:1,99999999999999','lte:'.$dbt->amount,
+        ];
+        $validator = Validator::make(request()->all(), $rules);
+        if ($validator->fails()) {
+            return $this->sendError('Please validate error', $validator->errors());
+        }
+        $debt = DebtsPayments::create([
+                'amount'    => $request->amount,
+                'debt_id' => $dbt->id,
+            ]);
+        //dd($debt);
+        $payment = $dbt->decrement('amount' ,$debt->amount);
+        return $this->sendResponse($debt ,'Taransaction Added successfully');
     }
 
     /**

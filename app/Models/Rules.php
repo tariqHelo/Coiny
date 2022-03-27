@@ -10,11 +10,10 @@ class Rules extends Model
     use HasFactory;
 
      protected $fillable = [
-        'icon',
+        'name',
         'amount',
         'category_id',
-         'note',
-        'type',
+        'period',
         'user_id'
     ];
 
@@ -22,5 +21,10 @@ class Rules extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

@@ -1,12 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
+
+
+use App\Http\Controllers\Api\BaseController as BaseController;
 
 use App\Models\Debts;
+use App\Models\DebtsPayments;
 use App\Http\Requests\StoreDebtsRequest;
 use App\Http\Requests\UpdateDebtsRequest;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
-class DebtsController extends Controller
+class DebtsController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +21,23 @@ class DebtsController extends Controller
      */
     public function index()
     {
-        //
+        $debt = Debts::query()->where('user_id', \Auth::user()->id)->first();
+        //dd($debt->id);
+        $debtsPayments = DebtsPayments::query()->where('debt_id', $debt->id)->get();
+        $payments = collect($debtsPayments)->map(function ($payments) {
+            return [
+                 'amount' => $payments->amount,
+                 'created_at' => $payments->created_at->format('Y-m-d'),
+            ];
+        });
+        //dd($payments);
+         $success =  [
+            'debt_name' => $debt->name,
+            'amount' => $debt->sum('amount'),
+            'type' => $debt->type,
+            'debtsPayments' => $payments,
+        ];
+        return $this->sendResponse($success ,'DebtsPayments Retirved successfully'); 
     }
 
     /**
@@ -34,9 +56,25 @@ class DebtsController extends Controller
      * @param  \App\Http\Requests\StoreDebtsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDebtsRequest $request)
-    {
-        //
+    public function store(Request $request)
+    {   
+        $rules = [
+            'name' =>'required',
+           // 'user_id' =>'required',
+            'type' =>'required',
+            'amount' => 'required|numeric|between:1,99999999999999',
+        ];
+        $validator = Validator::make(request()->all(), $rules);
+        if ($validator->fails()) {
+            return $this->sendError('Please validate error', $validator->errors());
+        }
+        $debt = Debts::create([
+                'name'    => $request->name,
+                'amount'  => $request->amount,
+                'type'    => $request->type,
+                'user_id' => \Auth::user()->id,
+            ]); 
+        return $this->sendResponse($debt ,'Debt Added successfully');
     }
 
     /**

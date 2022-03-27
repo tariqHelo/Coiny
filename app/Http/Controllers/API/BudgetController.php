@@ -7,6 +7,9 @@ use App\Http\Controllers\Api\BaseController as BaseController;
 use App\Models\Budget;
 use App\Http\Requests\StoreBudgetRequest;
 use App\Http\Requests\UpdateBudgetRequest;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+
 
 class BudgetController extends BaseController
 {
@@ -40,9 +43,24 @@ class BudgetController extends BaseController
      * @param  \App\Http\Requests\StoreBudgetRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBudgetRequest $request)
-    {
-        //
+    public function store(Request $request)
+    {   
+        $rules = [
+            'period' =>'required',
+            'category_id' => 'required',
+            'amount' => 'required|numeric|between:1,99999999999999',
+        ];
+        $validator = Validator::make(request()->all(), $rules);
+        if ($validator->fails()) {
+            return $this->sendError('Please validate error', $validator->errors());
+        }
+        $budget = Budget::create([
+                'amount' => $request->amount,
+                'period' => $request->period,
+                'category_id' => $request->category_id,
+                'user_id' => \Auth::user()->id,
+        ]);
+        return $this->sendResponse($budget ,'Budget Added successfully');
     }
 
     /**
