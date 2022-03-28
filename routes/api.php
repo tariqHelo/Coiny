@@ -15,7 +15,9 @@ use App\Http\Controllers\API\{
    BanksController,
    DebtsController,
    DebtsPaymentsController,
-   RulesController
+   RulesController,
+   CurrencyController,
+   TotalWealthController
 };
 use App\Http\Resources\{
    ExpensesRevenuesResource,
@@ -48,12 +50,13 @@ Route::middleware(['auth:sanctum'])->group( function () {
     'expenses'       => ExpensesController::class,
     'revenues'       => RevenuesController::class,
     'assets'         => AssetsController::class,
-    'transactions'   => TransactionsController::class,
+    'total_wealth'   => TotalWealthController::class,
     'budget'         => BudgetController::class,
     'banks'          => BanksController::class,
     'debts'          => DebtsController::class,
     'debts_payments' => DebtsPaymentsController::class,
     'rules'          => RulesController::class,
+    'currency'       => CurrencyController::class,
    ]);
 
    /// Logout User 

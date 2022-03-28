@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\API;
 
 
-use App\Http\Controllers\Api\BaseController as BaseController;
+use App\Http\Controllers\API\BaseController as BaseController;
 
 use Illuminate\Http\Request;
 use App\Models\Revenues;
 use App\Models\User;
+use App\Models\Transaction;
 use Validator;
 
 
@@ -21,17 +22,17 @@ class RevenuesController extends BaseController
      */
     public function index()
     {    
-        $total = Revenues::query()->where('user_id', \Auth::user()->id);
-        $net = collect($total->get())->map(function ($net) {
+        $total = Revenues::query()->where('user_id', \Auth::user()->id)->get();
+        $net = collect($total)->map(function ($net) {
             return [
                 'amount' => $net->amount,
                 'category' => $net->category->name,
                 'user_name' => $net->user->name,
             ];
-        })->groupBy('id');
+        });
         $success = [
             'all amounts' => $net,
-            'total' => $total->get()->sum('amount'),
+            'total' => $total->sum('amount'),
         ];
         return $this->sendResponse($success ,'Revenues Retirved successfully');
         // $total = User::query()->where('id',auth()->id())->first();

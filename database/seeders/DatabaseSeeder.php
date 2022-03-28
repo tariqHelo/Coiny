@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
         //  \App\Models\Budget::factory(10)->create();
          //  \App\Models\Transaction::factory(10)->create();
           //  \App\Models\Debts::factory(10)->create();
-             \App\Models\DebtsPayments::factory(10)->create();
+            // \App\Models\DebtsPayments::factory(10)->create();
           // \App\Models\BankAccounts::factory(15)->create();
+           \App\Models\Currency::factory(15)->create();
     }
 }

@@ -24,7 +24,8 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|max:30',
+            'icon' => 'required|image',
         ];
     }
 }

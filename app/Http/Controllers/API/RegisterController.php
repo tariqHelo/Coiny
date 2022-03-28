@@ -14,14 +14,14 @@ class RegisterController extends BaseController
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'name' =>'required',
-            'email' =>'required|email',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' =>'required',
             'c_password' =>'required|same:password',
         ]); 
 
         if ($validator->fails()) {
-            return $this->sendError('Please validate error' ,$validator->errors() );
+            return $this->sendError('Please validate error' ,$validator->errors());
         }
 
            //$input = $request->all();
@@ -34,8 +34,9 @@ class RegisterController extends BaseController
                 'password' => \Hash::make($request->password),
                 'type' => 'User'
             ]);
+            //dd($user);
             $success['token'] = $user->createToken('password')->plainTextToken;
-            $success['name'] = $user->name;
+            $success['user'] = $user;
 
         return $this->sendResponse($success ,'User registered successfully' );
     }

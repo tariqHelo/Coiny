@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API;
 
 
-use App\Http\Controllers\Api\BaseController as BaseController;
+use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Transaction;
-use App\Models\User;
+use App\Models\Expenses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,9 +19,9 @@ class ExpensesController extends BaseController
     public function index()
     {
          //dd(20)
-        $id = \Auth::user()->id;
-        $total = Expenses::query()->where('user_id', $id)->get();
-        $net = collect($total->groupBy('id')->get())->map(function ($net) {
+        $user = \Auth::user();
+        $total = Expenses::query()->where('user_id', $user->id);
+        $net = collect($total->get())->map(function ($net) {
             return [
                 'amount' => $net->amount,
                 'category' => $net->category->name,
@@ -30,6 +30,7 @@ class ExpensesController extends BaseController
         });
         //dd($net);
         $success = [
+            'user_name' => $user->name,
             'all amounts' => $net,
             'total' => $total->sum('amount'),
         ];

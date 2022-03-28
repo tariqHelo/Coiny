@@ -7,7 +7,7 @@ use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-use App\Http\Controllers\Api\BaseController as BaseController;
+use App\Http\Controllers\API\BaseController as BaseController;
 use Validator;
 
 class CategoryController extends BaseController
@@ -19,9 +19,19 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        $user =  Category::where('user_id' ,auth()->id())->get();
-       // dd($user);
-        return CategoryResource::collection($user);
+        $user =  Category::query()->where('user_id' ,auth()->id())->get();
+        $category = collect($user)->map(function ($category) {
+            return [
+                 'image' => $category->getImageUrlAttribute(),
+                 'category_name' => $category->name,
+               //  'bank_name' => $category->bank->name,
+            ];
+        });
+         $success =  [
+          'user_name' => \Auth::user()->name,
+          'categoreis' => $category,
+        ];
+        return $this->sendResponse($success ,'category Retirved successfully'); 
     }
 
     /**
@@ -53,12 +63,9 @@ class CategoryController extends BaseController
         $category = Category::create([
                 'name' => $request->name,
                 'icon' => $icon_path,
-                'user_id' => $request->user_id,
+                'user_id' => \Auth::user()->id,
             ]);
-        $success['name'] = $category->name;
-        $success['icon'] = $category->icon;
-        $success['user_id'] = $category->user_id;
-        return $this->sendResponse($success ,'Category Added successfully');
+        return $this->sendResponse($category ,'Category Created successfully');
     }
 
     /**

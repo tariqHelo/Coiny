@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 
 use App\Models\ExpensesRevenues;
 use App\Models\Transaction;
-use App\Models\Revenues;
 use App\Models\User;
 
-use App\Http\Controllers\Api\BaseController as BaseController;
+use App\Http\Controllers\API\BaseController as BaseController;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -23,11 +21,11 @@ class TransactionsController extends BaseController
      */
     public function index()
     {   
-        $total = User::query()->where('id',auth()->id())->first();
-        //dd($total);
-        $success =  [
-            'TotalWealth' => $total->totalWealth(),
-        ];
+        // $total = User::query()->where('id',auth()->id())->first();
+        // //dd($total);
+        // $success =  [
+        //     'TotalWealth' => $total->totalWealth(),
+        // ];
 
        return $this->sendResponse($success ,'TotalWealth for User Retirved successfully');
 

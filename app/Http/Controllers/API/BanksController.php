@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\API;
-use App\Http\Controllers\Api\BaseController as BaseController;
+use App\Http\Controllers\API\BaseController as BaseController;
 
 use App\Models\Banks;
 use App\Models\BankAccounts;
+use Illuminate\Http\Request;
 
 
 use App\Http\Requests\StoreBanksRequest;
@@ -54,7 +55,7 @@ class BanksController extends BaseController
      * @param  \App\Http\Requests\StoreBanksRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBanksRequest $request)
+    public function store(Request $request)
     {
         //
     }

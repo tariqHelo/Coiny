@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Api\BaseController as BaseController;
-use App\Models\User;
+use Validator;
+use App\Models\Assets;
 use App\Http\Requests\StoreAssetsRequest;
 use App\Http\Requests\UpdateAssetsRequest;
+use Illuminate\Http\Request;
 
 class AssetsController extends BaseController
 {
@@ -18,13 +20,21 @@ class AssetsController extends BaseController
      */
     public function index()
     {    
-       // dd(20);
-        $total = User::query()->where('id',auth()->id())->first();
+        $asset = Assets::query()->where('user_id',auth()->id())->get();
+        $assets = collect($asset)->map(function ($assets) {
+            return [
+                 'asset_name' => $assets->name,
+                 'user_id' => $assets->user_id,
+                 'icon' => $assets->icon,
+                 'depreciation' => $assets->depreciation,
+                 'value' => $assets->value,
+            ];
+        });
         $success =  [
-            // 'revenues' => $total->revenuesTransactions() ,
-             'Assets' => $total->assetsResult(),
+             'user_name' => \Auth::user()->name,
+             'Assets' => $assets,
+             'totalAssets' => $asset->sum('value'),
         ];
-       //dd($total);
         return $this->sendResponse($success ,'Assets Retirved successfully');
     }
 
@@ -44,9 +54,22 @@ class AssetsController extends BaseController
      * @param  \App\Http\Requests\StoreAssetsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAssetsRequest $request)
-    {
-        //
+    public function store(Request $request)
+    {    
+        $validator = Validator::make($request->all(),[
+            'name' => 'required', 'string', 'max:255',
+            'icon' =>'required|image',
+            'useful_life' =>'required|numeric' , 'min:1',
+            'depreciation' =>'required|numeric','min:1',
+            'value' =>'required|numeric','min:1',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Please validate error' ,$validator->errors() );
+        }
+         $data = array_merge($request->all(), ['user_id' => \Auth::user()->id]);
+         $candidate = Assets::create($data);
+        return $this->sendResponse($category ,'Category Created successfully');
     }
 
     /**

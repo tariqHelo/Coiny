@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Api\BaseController as BaseController;
+use App\Http\Controllers\API\BaseController as BaseController;
 
 use App\Models\Budget;
 use App\Http\Requests\StoreBudgetRequest;
@@ -45,6 +45,7 @@ class BudgetController extends BaseController
      */
     public function store(Request $request)
     {   
+      //  dd($request->array[3]);
         $rules = [
             'period' =>'required',
             'category_id' => 'required',
